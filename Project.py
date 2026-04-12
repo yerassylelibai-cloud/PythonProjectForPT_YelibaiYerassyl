@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from contourpy.util import data
 
 
-class CleanScatter:
+
+class HeightWeight:
     def __init__(self, data):
         self.x = data[:,0] #height
         self.y = data[:,1] #weight
@@ -12,23 +12,24 @@ class CleanScatter:
         self.x = self.x[mask]
         self.y = self.y[mask]
     def scatter(self):
+        self.clean()
         plt.scatter(self.x, self.y, color='red', label='Data points')
         plt.xlabel('Height (cm)')
         plt.ylabel('Weight (kg)')
         plt.title('Height vs Weight')
         plt.legend()
         return plt.show()
+    def FindOSL(self):
+        self.clean()
+        A = np.column_stack([np.ones(len(self.x)), self.x])
+        self.a, self.b = np.linalg.lstsq(A, self.y, rcond=None)[0]
+
+
 
 def main(data):
-    CS = CleanScatter(data)
-    CS.clean()
-    CS.scatter()
+    HW = HeightWeight(data)
+    HW.scatter()
 
-data1 = np.array([
-    [155, 55], [160, 60], [162, 58], [165, 65],
-    [168, 70], [170, 68], [172, 75], [175, 80],
-    [178, 82], [180, 85], [183, 90], [158, 62],
-    [163, 67], [169, 72], [174, 78], [np.nan, 76],
-    [176, np.nan],
-])  #test
+
+data1 = np.genfromtxt('source/body.csv', delimiter=',', skip_header=1)
 main(data1)
