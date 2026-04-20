@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 
@@ -22,14 +23,19 @@ class HeightWeight:
     def FindOSL(self):
         self.clean()
         A = np.column_stack([np.ones(len(self.x)), self.x])
-        self.a, self.b = np.linalg.lstsq(A, self.y, rcond=None)[0]
-
+        a, b = np.linalg.lstsq(A, self.y, rcond=None)[0]
+        return [a, b]
+    def Table(self):
+        self.Table = pd.DataFrame(np.column_stack([self.x, self.y]), columns=['height_cm', 'weight_kg'])
+        self.Table['pred_weight'] = self.FindOSL()[0] * self.x + self.FindOSL()[1]
+        return self.Table
 
 
 def main(data):
     HW = HeightWeight(data)
-    HW.scatter()
-
+    HW.clean()
+    # HW.scatter()
+    print(HW.Table())
 
 data1 = np.genfromtxt('source/body.csv', delimiter=',', skip_header=1)
 main(data1)
