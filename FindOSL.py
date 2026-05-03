@@ -8,4 +8,4 @@ class FindOSL(OrganizeData):
 
     def CalculateOSL(self):
         A = np.column_stack([np.ones(len(self.clean_x)), self.clean_x])
-        self.a, self.b = np.linalg.lstsq(A, self.clean_y, rcond=None)[0]
+        self.b, self.a = np.linalg.lstsq(A, self.clean_y)[0]

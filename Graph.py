@@ -25,5 +25,5 @@ class Graph(FindMAE):
 
 
         plt.legend()
-        return plt.show()
+        return plt.savefig("result.png")
 
