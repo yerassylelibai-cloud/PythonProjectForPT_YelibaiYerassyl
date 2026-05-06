@@ -13,7 +13,7 @@ class Graph(FindMAE):
         plt.scatter(self.clean_x, self.clean_y, color = "blue", label = "Height to weight")
 
         line_x = self.clean_x
-        line_y = self.a + self.b * line_x
+        line_y = self.b + self.a * line_x
 
         plt.plot(line_x, line_y, color = "red", label = "Regression line")
 
@@ -25,5 +25,6 @@ class Graph(FindMAE):
 
 
         plt.legend()
+
         return plt.savefig("result.png")
 
