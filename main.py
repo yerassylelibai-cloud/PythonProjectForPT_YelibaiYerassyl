@@ -28,7 +28,7 @@ app = FastAPI()
 
 @app.post("/analyze")
 async def analyze_data(file: UploadFile = File(...)):
-    # 1. Read the uploaded file into a NumPy array
+
     content = await file.read()
     raw_data = np.genfromtxt(io.BytesIO(content), delimiter=',', skip_header=1)
 
@@ -39,7 +39,7 @@ async def analyze_data(file: UploadFile = File(...)):
 
     Graph(raw_data).BuildGraph()
 
-    # 3. Return the JSON (This is the "Output" for Task 14)
+
     return {
         "coefficients": {
             "slope_a": float(mae_calculator.a),
